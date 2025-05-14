@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "age"})
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 같은 패키지 혹은 상속받은 클래스에서 생성 가능 -> protect 접근자
+@Entity
 public class Member {
     @Id
     @GeneratedValue
@@ -22,17 +22,24 @@ public class Member {
     private Team team;
 
     public Member(String username) {
-        this.username = username;
+        this(username, 0);
     }
 
-    public void changeTeam (Team team) {
-        if(this.team != null){
-            this.team.getMembers().remove(this);
+    public Member(String username, int age) {
+        this(username, age, null);
+    }
+
+    public Member(String username, int age, Team team) {
+        this.username = username;
+        this.age = age;
+        if (team != null) {
+            changeTeam(team);
         }
+    }
+
+    public void changeTeam(Team team) {
         this.team = team;
-        if(team != null){
-            team.getMembers().add(this);
-        }
+        team.getMembers().add(this);
     }
 
 }

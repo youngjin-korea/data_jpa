@@ -1,18 +1,16 @@
 package study.data_jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Getter
 @Setter
+@ToString(of = {"id", "name"})
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Team {
     @Id
     @GeneratedValue
